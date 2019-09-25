@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- default colours-->
     <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimaryDark">#009688</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!--colours by name -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <!--colours by use -->
+    <color name="buttonColor">#BF808080</color>
+    <color name="buttonColorClicked">#BF808080</color>
+
+
 </resources>
