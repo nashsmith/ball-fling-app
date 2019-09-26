@@ -30,7 +30,7 @@ public class GameActivity extends AppCompatActivity {
     static final int BALL_MASS = 8;
     static final int BALL_TERMINAL_VELOCITY = 20;
     static final double BOUNCINESS = 0.6;
-
+    String s = "hello";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
