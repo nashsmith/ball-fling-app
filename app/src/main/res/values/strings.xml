@@ -3,4 +3,5 @@
     <string name="game_name">Game Name!</string>
     <string name="buttonStart">Start!</string>
     <string name="buttonHighscores">High Scores</string>
+    <string name="buttonReset">Reset</string>
 </resources>
