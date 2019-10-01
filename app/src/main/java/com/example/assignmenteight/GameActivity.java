@@ -15,25 +15,17 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class GameActivity extends AppCompatActivity {
     //Initialize objects
     //Screen size
-    int width;
-    int height;
-    //Ball position
-    float x;
-    float y;
-    //Ball speed
-    float dx = 0;
-    float dy = 0;
-    //Ball options
-    boolean isFlingable = true;
-    //Ball parameters
-    static final int BALL_RADIUS = 35;
-    static final int BALL_MASS = 256;
-    static final int BALL_TERMINAL_VELOCITY = 20;
-    static final double BOUNCINESS = 0.6;
+    float width;
+    float height;
+    //List of all the game objects
+    List<GameObject> objectList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +51,7 @@ public class GameActivity extends AppCompatActivity {
 
         //Get view
         ConstraintLayout constraintLayout = findViewById(R.id.constraintLayoutRoot);
-        //Create Graphicsview object
+        //Create GraphicsView object
         GraphicsView graphicsView = new GraphicsView(this);
         //Add graphics view to layout
         constraintLayout.addView(graphicsView);
@@ -74,10 +66,19 @@ public class GameActivity extends AppCompatActivity {
     public class GraphicsView extends View {
         //Declare variables
         Paint paint = new Paint();
+
+        Ball ball;
         GestureDetector gestureDetector;
+
         //Constructor
         public GraphicsView(Context context) {
             super(context);
+            //Create objects
+            paint.setColor(getColor(R.color.colorPrimary));
+            ball = new Ball(width / 2, height - 100, paint);
+
+            //Add objects to the objectsList
+            objectList.add(ball);
             //Create gesture detector
             gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
                 @Override
@@ -87,44 +88,32 @@ public class GameActivity extends AppCompatActivity {
 
                 @Override
                 public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float velocityX, float velocityY) {
-                    dx = velocityX/BALL_MASS;
-                    dy = velocityY/BALL_MASS;
-                    isFlingable = false;
+                    ball.dx = velocityX / Ball.BALL_MASS;
+                    ball.dy = velocityY / Ball.BALL_MASS;
+                    ball.isFlingable = false;
                     return true;
                 }
             });
-            //Set color of the ball
-            paint.setColor(getColor(R.color.colorPrimary));
-            //Set initial position to the centre of the screen
-            x = width/2;
-            y = height - 50;
+
+
         }
 
         @Override
         protected void onDraw(Canvas canvas) {
-            //If the ball will still be on the screen...
-            if(x + dx > BALL_RADIUS && x + dx < width - BALL_RADIUS)
-                x = x + dx; //Move the ball
-            else //Else if we are hitting a wall, bounce!
-                dx = (float)(-dx*BOUNCINESS);
-            if(y + dy > BALL_RADIUS && y + dy < height - BALL_RADIUS)
-                y = y + dy;
-            else
-                dy = (float)(-dy*BOUNCINESS);
-            //Draw the ball in the new position
-            canvas.drawCircle(x, y,BALL_RADIUS,paint);
+            for (GameObject object:objectList) {
+                object.Draw(canvas,width,height);
+                
+            }
             //Redraw in the next position
             invalidate();
         }
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {
-            if(isFlingable){
-                if(event.getX() > BALL_RADIUS && event.getX() < width - BALL_RADIUS)
-                    x = event.getX();
-                if(event.getY() > BALL_RADIUS && event.getY() < height - BALL_RADIUS)
-                    y = event.getY();
-                if(gestureDetector.onTouchEvent(event)){
+            if (ball.isFlingable) {
+                if (event.getX() > Ball.BALL_RADIUS && event.getX() < width - Ball.BALL_RADIUS)
+                    ball.x = event.getX();
+                if (gestureDetector.onTouchEvent(event)) {
                     return true;
                 }
                 return super.onTouchEvent(event);
