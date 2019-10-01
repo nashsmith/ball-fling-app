@@ -64,13 +64,13 @@ public class Ball extends GameObject{
     }
 
     @Override
-    public void Draw(Canvas canvas, float width, float height) {
+    public void Draw(Canvas canvas) {
         //If the ball will still be on the screen...
-        if (x + dx > BALL_RADIUS && x + dx < width - BALL_RADIUS)
+        if (x + dx > BALL_RADIUS && x + dx < screenWidth - BALL_RADIUS)
             x = x + dx; //Move the ball
         else //Else if we are hitting a wall, bounce!
             dx = (float) (-dx * BOUNCINESS);
-        if (y + dy > BALL_RADIUS && y + dy < height - BALL_RADIUS)
+        if (y + dy > BALL_RADIUS && y + dy < screenHeight - BALL_RADIUS)
             y = y + dy;
         else
             dy = (float) (-dy * BOUNCINESS);

@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -80,15 +79,13 @@ public class GameActivity extends AppCompatActivity {
 
             //Add objects to the objectsList
             objectList.add(ball);
-
-
         }
 
         @Override
         protected void onDraw(Canvas canvas) {
-            for (GameObject object:objectList) {
-                object.Draw(canvas,width,height);
-                
+            for (GameObject object : objectList) {
+                object.Draw(canvas);
+
             }
             //Redraw in the next position
             invalidate();
@@ -96,7 +93,7 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {
-            if(ball.Move(event))
+            if (ball.Move(event))
                 return true;
             return super.onTouchEvent(event);
         }
