@@ -5,14 +5,16 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import static java.lang.Math.abs;
+
 
 public class Ball extends GameObject{
     //Constants
     //Ball parameters
     public static final int BALL_RADIUS = 40;
-    public static final int BALL_MASS = 256;
-    public static final int BALL_TERMINAL_VELOCITY = 20;
-    public static final double BOUNCINESS = 0.6;
+    public static final int BALL_MASS = 400;
+    public static final int BALL_TERMINAL_VELOCITY = 100;
+    public static final float BOUNCINESS = (float)0.8;
     //Datafields
     //Ball speed
     public float dx = 0;
@@ -66,6 +68,15 @@ public class Ball extends GameObject{
 
     @Override
     public void Draw(Canvas canvas) {
+        //Gravity
+//        if(!isFlingable){
+//            dy += 0.2;
+//        }
+//        //Set terminal velocity
+//        if(abs(dx) > BALL_TERMINAL_VELOCITY)
+//            dx = (dx/dx) * BALL_TERMINAL_VELOCITY;
+//        if(abs(dy) > BALL_TERMINAL_VELOCITY)
+//            dy = (dy/dy) * BALL_TERMINAL_VELOCITY;
         //If the ball will still be on the screen...
         if (x + dx > BALL_RADIUS && x + dx < screenWidth - BALL_RADIUS)
             x = x + dx; //Move the ball

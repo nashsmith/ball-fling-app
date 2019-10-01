@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +26,7 @@ public class GameActivity extends AppCompatActivity {
     float height;
     //List of all the game objects
     List<GameObject> objectList = new ArrayList<>();
+    List<Barrier> barrierList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,13 @@ public class GameActivity extends AppCompatActivity {
         GraphicsView graphicsView = new GraphicsView(this);
         //Add graphics view to layout
         constraintLayout.addView(graphicsView);
+
+        /*Obstacles*/
+        barrierList.add(new Barrier(250, 900, 800));
+        barrierList.add(new Barrier(250, 1100, 800));
+        barrierList.add(new Barrier(250, 1400, 800));
+        barrierList.add(new Barrier(250, 700, 800));
+        barrierList.add(new Barrier(250, 400, 800));
     }
 
     public void onclickButtonReset(View view) {
@@ -83,9 +92,15 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         protected void onDraw(Canvas canvas) {
+
+            for(Barrier b : barrierList){
+                b.Draw(canvas);
+                if(b.collidesWith(ball)){
+                }
+
+            }
             for (GameObject object : objectList) {
                 object.Draw(canvas);
-
             }
             //Redraw in the next position
             invalidate();

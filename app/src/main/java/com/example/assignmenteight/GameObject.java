@@ -11,9 +11,9 @@ public abstract class GameObject {
     float x;
     float y;
 
-    public GameObject(float _x, float _y){
-        x = _x;
-        y = _y;
+    public GameObject(float startX, float startY){
+        x = startX;
+        y = startY;
     }
 
     public abstract void Draw(Canvas canvas);
