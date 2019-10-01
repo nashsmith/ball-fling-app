@@ -11,5 +11,10 @@ public abstract class GameObject {
     float x;
     float y;
 
+    public GameObject(float _x, float _y){
+        x = _x;
+        y = _y;
+    }
+
     public abstract void Draw(Canvas canvas);
 }

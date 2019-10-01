@@ -28,8 +28,9 @@ public class Ball extends GameObject{
 
     //Constructor
     public Ball(Context context, float startX, float startY, Paint p){
-        x = startX;
-        y = startY;
+        //x = startX;
+        //y = startY;
+        super(startX, startY);
         color = p;
 
 
