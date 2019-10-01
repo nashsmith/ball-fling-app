@@ -1,7 +1,10 @@
 package com.example.assignmenteight;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 
 public class Ball extends GameObject{
     //Constants
@@ -18,14 +21,46 @@ public class Ball extends GameObject{
     public boolean isFlingable = true;
     //Ball color
     public Paint color;
+    //Gesture Detector
+    GestureDetector gestureDetector;
+
 
 
     //Constructor
-    public Ball(float startX, float startY, Paint p){
+    public Ball(Context context, float startX, float startY, Paint p){
         x = startX;
         y = startY;
         color = p;
 
+
+        //Create gesture detector
+        gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent motionEvent) {
+                return true;
+            }
+
+            @Override
+            public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float velocityX, float velocityY) {
+                dx = velocityX / BALL_MASS;
+                dy = velocityY / BALL_MASS;
+                isFlingable = false;
+                return true;
+            }
+        });
+
+    }
+
+    public boolean Move(MotionEvent event) {
+        if (isFlingable) {
+            if (event.getX() > BALL_RADIUS && event.getX() < screenWidth - BALL_RADIUS)
+                x = event.getX();
+            if (gestureDetector.onTouchEvent(event)) {
+                return true;
+            }
+            return false;
+        }
+        return true;
     }
 
     @Override

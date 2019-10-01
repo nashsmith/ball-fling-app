@@ -48,6 +48,8 @@ public class GameActivity extends AppCompatActivity {
         display.getSize(size);
         width = size.x;
         height = size.y;
+        GameObject.screenWidth = width;
+        GameObject.screenHeight = height;
 
         //Get view
         ConstraintLayout constraintLayout = findViewById(R.id.constraintLayoutRoot);
@@ -68,32 +70,16 @@ public class GameActivity extends AppCompatActivity {
         Paint paint = new Paint();
 
         Ball ball;
-        GestureDetector gestureDetector;
 
         //Constructor
         public GraphicsView(Context context) {
             super(context);
             //Create objects
             paint.setColor(getColor(R.color.colorPrimary));
-            ball = new Ball(width / 2, height - 100, paint);
+            ball = new Ball(context, width / 2, height - 100, paint);
 
             //Add objects to the objectsList
             objectList.add(ball);
-            //Create gesture detector
-            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-                @Override
-                public boolean onDown(MotionEvent motionEvent) {
-                    return true;
-                }
-
-                @Override
-                public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float velocityX, float velocityY) {
-                    ball.dx = velocityX / Ball.BALL_MASS;
-                    ball.dy = velocityY / Ball.BALL_MASS;
-                    ball.isFlingable = false;
-                    return true;
-                }
-            });
 
 
         }
@@ -110,15 +96,9 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {
-            if (ball.isFlingable) {
-                if (event.getX() > Ball.BALL_RADIUS && event.getX() < width - Ball.BALL_RADIUS)
-                    ball.x = event.getX();
-                if (gestureDetector.onTouchEvent(event)) {
-                    return true;
-                }
-                return super.onTouchEvent(event);
-            }
-            return true;
+            if(ball.Move(event))
+                return true;
+            return super.onTouchEvent(event);
         }
 
     }
