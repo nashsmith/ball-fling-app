@@ -30,4 +30,16 @@
 
         android:onClick="onclickButtonReset"/>
 
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:text="@string/game_name">
+
+    </TextView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

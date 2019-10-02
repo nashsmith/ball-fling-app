@@ -37,6 +37,7 @@ public class Barrier extends GameObject{
         float testY = ball.y;
         boolean isSideCollison = false;
         boolean isVertCollision = false;
+        boolean isTop = false;
 
 
         //Check which side ball is closest to
@@ -54,6 +55,7 @@ public class Barrier extends GameObject{
         if(ball.y < this.y) {
             testY = this.y;
             isVertCollision = true;
+            isTop = true;
         }
         //bottom wall
         else if(ball.y > this.y + Barrier.THICKNESS){
@@ -67,18 +69,23 @@ public class Barrier extends GameObject{
         float distanceY = ball.y - testY;
         float distance = (float)Math.sqrt( (distanceX*distanceX) + (distanceY*distanceY));
 
-        if(distance <= Ball.BALL_RADIUS  && !isAlreadyColliding) {
-            if(isSideCollison){
-                ball.dx = -ball.dx*Ball.BOUNCINESS;
-
+        if(distance <= Ball.BALL_RADIUS) {
+            if(isTop){
+                ball.dy -= 0.2; //Equal and opposite force against gravity
             }
-            if(isVertCollision){
-                ball.dy = -ball.dy*Ball.BOUNCINESS;
+            if(!isAlreadyColliding){
+                isAlreadyColliding = true;
+                if(isSideCollison){
+                    ball.dx = -ball.dx*Ball.BOUNCINESS;
+
+                }
+                if(isVertCollision){
+                    ball.dy = -ball.dy*Ball.BOUNCINESS;
+                }
+                return true;
+            }else{
+                return false;
             }
-
-            isAlreadyColliding = true;
-            return true;
-
         }
         isAlreadyColliding = false;
         return false;

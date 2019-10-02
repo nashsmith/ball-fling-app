@@ -17,4 +17,6 @@ public abstract class GameObject {
     }
 
     public abstract void Draw(Canvas canvas);
+
+    public abstract boolean collidesWith(Ball ball);
 }

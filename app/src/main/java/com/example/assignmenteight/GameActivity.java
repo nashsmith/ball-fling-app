@@ -10,10 +10,13 @@ import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +27,11 @@ public class GameActivity extends AppCompatActivity {
     //Screen size
     float width;
     float height;
+    //Score
+    TextView textViewScore;
+    int score = 0;
     //List of all the game objects
     List<GameObject> objectList = new ArrayList<>();
-    List<Barrier> barrierList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +64,10 @@ public class GameActivity extends AppCompatActivity {
         //Add graphics view to layout
         constraintLayout.addView(graphicsView);
 
-        /*Obstacles*/
-        barrierList.add(new Barrier(250, 900, 800));
+        //Set textview score to 0 at the start
+        textViewScore = findViewById(R.id.score);
+        textViewScore.setText(String.valueOf(score));
+
 
     }
 
@@ -85,18 +92,25 @@ public class GameActivity extends AppCompatActivity {
 
             //Add objects to the objectsList
             objectList.add(ball);
+            /*Obstacles*/
+            objectList.add(new Barrier(250, 900, 800));
+            objectList.add(new Target(100, 400, 40));
         }
 
         @Override
         protected void onDraw(Canvas canvas) {
 
-            for(Barrier b : barrierList){
-                b.Draw(canvas);
-                b.collidesWith(ball);
-
-            }
             for (GameObject object : objectList) {
                 object.Draw(canvas);
+                if(object.collidesWith(ball)){
+                    if (object.getClass().equals(Target.class)){
+                        score++;
+                        textViewScore.setText(String.valueOf(score));
+
+
+                    }
+
+                }
             }
             //Redraw in the next position
             invalidate();
