@@ -61,10 +61,7 @@ public class GameActivity extends AppCompatActivity {
 
         /*Obstacles*/
         barrierList.add(new Barrier(250, 900, 800));
-        barrierList.add(new Barrier(250, 1100, 800));
-        barrierList.add(new Barrier(250, 1400, 800));
-        barrierList.add(new Barrier(250, 700, 800));
-        barrierList.add(new Barrier(250, 400, 800));
+
     }
 
     public void onclickButtonReset(View view) {
@@ -95,8 +92,7 @@ public class GameActivity extends AppCompatActivity {
 
             for(Barrier b : barrierList){
                 b.Draw(canvas);
-                if(b.collidesWith(ball)){
-                }
+                b.collidesWith(ball);
 
             }
             for (GameObject object : objectList) {

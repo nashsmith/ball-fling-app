@@ -12,8 +12,8 @@ public class Ball extends GameObject{
     //Constants
     //Ball parameters
     public static final int BALL_RADIUS = 40;
-    public static final int BALL_MASS = 400;
-    public static final int BALL_TERMINAL_VELOCITY = 100;
+    public static final int BALL_MASS = 512;
+    public static final int BALL_TERMINAL_VELOCITY = 50;
     public static final float BOUNCINESS = (float)0.8;
     //Datafields
     //Ball speed
@@ -72,20 +72,20 @@ public class Ball extends GameObject{
 //        if(!isFlingable){
 //            dy += 0.2;
 //        }
-//        //Set terminal velocity
-//        if(abs(dx) > BALL_TERMINAL_VELOCITY)
-//            dx = (dx/dx) * BALL_TERMINAL_VELOCITY;
-//        if(abs(dy) > BALL_TERMINAL_VELOCITY)
-//            dy = (dy/dy) * BALL_TERMINAL_VELOCITY;
+        //Set terminal velocity
+        if(abs(dx) > BALL_TERMINAL_VELOCITY)
+            dx = (dx/dx) * BALL_TERMINAL_VELOCITY;
+        if(abs(dy) > BALL_TERMINAL_VELOCITY)
+            dy = (dy/dy) * BALL_TERMINAL_VELOCITY;
         //If the ball will still be on the screen...
         if (x + dx > BALL_RADIUS && x + dx < screenWidth - BALL_RADIUS)
             x = x + dx; //Move the ball
         else //Else if we are hitting a wall, bounce!
-            dx = (float) (-dx * BOUNCINESS);
+            dx = (-dx * BOUNCINESS);
         if (y + dy > BALL_RADIUS && y + dy < screenHeight - BALL_RADIUS)
             y = y + dy;
         else
-            dy = (float) (-dy * BOUNCINESS);
+            dy = (-dy * BOUNCINESS);
         //Draw the ball in the new position
         canvas.drawCircle(x, y, BALL_RADIUS, color);
     }
