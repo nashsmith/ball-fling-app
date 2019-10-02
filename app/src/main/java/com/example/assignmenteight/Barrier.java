@@ -71,15 +71,23 @@ public class Barrier extends GameObject{
 
         if(distance <= Ball.BALL_RADIUS) {
             if(isTop){
-                ball.dy -= 0.2; //Equal and opposite force against gravity
+                ball.dy -= 0.3; //Equal and opposite force against gravity
             }
             if(!isAlreadyColliding){
                 isAlreadyColliding = true;
-                if(isSideCollison){
+                if(isSideCollison && isVertCollision){
+                    if(Math.abs(ball.dx)> Math.abs(ball.dy))
+                        ball.dy = -ball.dy*Ball.BOUNCINESS;
+                    else
+                        ball.dx = -ball.dx*Ball.BOUNCINESS;
+
+
+                }
+                else if(isSideCollison){
                     ball.dx = -ball.dx*Ball.BOUNCINESS;
 
                 }
-                if(isVertCollision){
+                else if(isVertCollision){
                     ball.dy = -ball.dy*Ball.BOUNCINESS;
                 }
                 return true;

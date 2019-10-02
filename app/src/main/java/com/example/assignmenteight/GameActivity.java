@@ -91,10 +91,11 @@ public class GameActivity extends AppCompatActivity {
             ball = new Ball(context, width / 2, height - 100, paint);
 
             //Add objects to the objectsList
-            objectList.add(ball);
+
             /*Obstacles*/
             objectList.add(new Barrier(250, 900, 800));
             objectList.add(new Target(100, 400, 40));
+            objectList.add(ball);
         }
 
         @Override
