@@ -9,6 +9,8 @@ public class Target extends GameObject{
     private Paint brush = new Paint(); //
     private float radius;
     private boolean isAlreadyColliding = false;
+    private boolean isMovingRight = true;
+    private static final int MOVEMENT_SPEED = 5;
 
 
     /*Constructor*/
@@ -23,6 +25,20 @@ public class Target extends GameObject{
     /*Draw the target*/
     @Override
     public void Draw(Canvas canvas){
+        if(isMovingRight){
+            if((x + 1) + radius > screenWidth){
+            isMovingRight = false;
+        }else{
+            x = x + MOVEMENT_SPEED;
+        }
+    }
+        if(!isMovingRight){
+            if((x - MOVEMENT_SPEED) - radius < 0){
+                isMovingRight = true;
+            }else{
+                x = x - MOVEMENT_SPEED;
+            }
+    }
 
         canvas.drawCircle(x, y, radius, brush);
     }

@@ -6,7 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.CountDownTimer;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,8 +15,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +27,12 @@ public class GameActivity extends AppCompatActivity {
     float height;
     //Score
     TextView textViewScore;
+    //Timer
+    TextView textViewTimer;
     int score = 0;
     //List of all the game objects
     List<GameObject> objectList = new ArrayList<>();
+    Ball ball;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +67,16 @@ public class GameActivity extends AppCompatActivity {
 
         //Set textview score to 0 at the start
         textViewScore = findViewById(R.id.score);
-        textViewScore.setText(String.valueOf(score));
+        textViewScore.setText(String.format("Score: %s", String.valueOf(score)));
+        //Set textview time
+        textViewTimer = findViewById(R.id.timer);
+
 
 
     }
 
     public void onclickButtonReset(View view) {
-        recreate();
+        ball.Reset();
     }
 
 
@@ -81,7 +85,6 @@ public class GameActivity extends AppCompatActivity {
         //Declare variables
         Paint paint = new Paint();
 
-        Ball ball;
 
         //Constructor
         public GraphicsView(Context context) {
@@ -89,12 +92,28 @@ public class GameActivity extends AppCompatActivity {
             //Create objects
             paint.setColor(getColor(R.color.colorPrimary));
             ball = new Ball(context, width / 2, height - 100, paint);
+            //Create a countdown timer
+            CountDownTimer timer = new CountDownTimer(30000, 1000) {
+                @Override
+                public void onTick(long l) {
+                    textViewTimer.setText(String.format("Time: %d", l / 1000));
+
+                }
+
+                @Override
+                public void onFinish() {
+                    //Should exit the game and add the score to the highscore screen here
+                    textViewTimer.setText("Self destruct!");
+
+
+                }
+            }.start();
 
             //Add objects to the objectsList
 
             /*Obstacles*/
             objectList.add(new Barrier(250, 900, 800));
-            objectList.add(new Target(100, 400, 40));
+            objectList.add(new Target(100, 400, 60));
             objectList.add(ball);
         }
 
@@ -106,13 +125,13 @@ public class GameActivity extends AppCompatActivity {
                 if(object.collidesWith(ball)){
                     if (object.getClass().equals(Target.class)){
                         score++;
-                        textViewScore.setText(String.valueOf(score));
-
-
+                        textViewScore.setText(String.format("Score: %s", String.valueOf(score)));
+                        ball.Reset();
                     }
 
                 }
             }
+
             //Redraw in the next position
             invalidate();
         }

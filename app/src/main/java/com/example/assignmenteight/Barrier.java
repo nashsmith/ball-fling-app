@@ -71,7 +71,7 @@ public class Barrier extends GameObject{
 
         if(distance <= Ball.BALL_RADIUS) {
             if(isTop){
-                ball.dy -= 0.3; //Equal and opposite force against gravity
+                ball.dy -= 0.21; //Equal and opposite force against gravity
             }
             if(!isAlreadyColliding){
                 isAlreadyColliding = true;

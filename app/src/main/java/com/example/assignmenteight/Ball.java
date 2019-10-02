@@ -5,6 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+
+import java.util.Random;
+
 import static java.lang.Math.abs;
 
 
@@ -15,6 +18,7 @@ public class Ball extends GameObject{
     public static final int BALL_MASS = 256;
     public static final int BALL_TERMINAL_VELOCITY = 50;
     public static final float BOUNCINESS = (float)0.6;
+    public static Random random = new Random();
     //Datafields
     //Ball speed
     public float dx = 0;
@@ -89,5 +93,15 @@ public class Ball extends GameObject{
 
     public boolean collidesWith(Ball ball){
         return false;
+    }
+
+    public void Reset(){
+        x = screenWidth / 2;
+        y = screenHeight - 100;
+        dy = 0;
+        dx = 0;
+        isFlingable = true;
+        color.setARGB(255, random.nextInt(256), random.nextInt(256), random.nextInt(256));
+
     }
 }
