@@ -4,12 +4,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
 
 public class Barrier extends GameObject{
 
     private static final int THICKNESS = 60; //thickness of the barrier
-    private static final Paint COLOR = new Paint(android.R.color.black); //
+    private Paint paint = new Paint();
     private int length;
     private boolean isAlreadyColliding = false;
 
@@ -17,6 +16,7 @@ public class Barrier extends GameObject{
     public Barrier(float startX, float startY, int rectLength){
         super(startX, startY); //call GameObject constructor
         length = rectLength; //set length
+        paint.setColor(Color.WHITE);
     }
 
     /*Draw the barrier*/
@@ -28,7 +28,7 @@ public class Barrier extends GameObject{
         int bottom = top + THICKNESS; //Distance from top of screen to bottom wall
 
         Rect rec = new Rect(left, top, right, bottom);
-        canvas.drawRect(rec, COLOR); //Draw the barrier
+        canvas.drawRect(rec, paint); //Draw the barrier
     }
 
     /*Check if the ball passed in is colliding with this barrier*/

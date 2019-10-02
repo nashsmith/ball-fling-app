@@ -12,7 +12,8 @@
 
     <!--colours by use -->
     <color name="buttonColor">#BF808080</color>
-    <color name="buttonColorClicked">#BF808080</color>
+    <color name="buttonColorClicked">#BF3D3D3D</color>
+    <color name="Tint">#BF808080</color>
 
 
 </resources>

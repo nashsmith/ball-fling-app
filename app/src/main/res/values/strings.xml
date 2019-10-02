@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">assignmenteight</string>
-    <string name="game_name">Game Name!</string>
+    <string name="app_name">Spaceball!</string>
+    <string name="game_name">Spaceball!</string>
+    <string name="developers">Developed by Justin and Nash</string>
     <string name="buttonStart">Start!</string>
     <string name="buttonHighscores">High Scores</string>
     <string name="buttonReset">Reset</string>
