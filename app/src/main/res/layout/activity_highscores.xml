@@ -4,12 +4,47 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HighscoresActivity">
+    tools:context=".HighscoresActivity"
+    android:background="@color/black">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/buttonHighscores"
+        android:textColor="@color/white"
+        android:textSize="@android:dimen/notification_large_icon_height"
+        android:padding="20dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textAlignment="center"/>
 
     <ListView
         android:id="@+id/highscoresList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:layout_margin="20dp">
     </ListView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="20dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:background="@drawable/button_style"
+        android:textColor="@color/white"
+        android:text="@string/buttonPlayAgain"
+        android:onClick="onclickButtonStart"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="20dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:background="@drawable/button_style"
+        android:textColor="@color/white"
+        android:text="@string/buttonBacktomenu"
+        android:onClick="onclickButtonMenu"/>
+
 
 </LinearLayout>

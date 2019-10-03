@@ -139,6 +139,10 @@ public class GameActivity extends AppCompatActivity {
             edit.putInt("third", score);
             edit.putString("thirdName", name);
             edit.apply();
+        }else if(preferences.getInt("fourth", -1) < score){
+            edit.putInt("fourth", score);
+            edit.putString("fourthName", name);
+            edit.apply();
         }
     }
 
