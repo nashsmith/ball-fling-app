@@ -106,7 +106,7 @@ public class Barrier extends GameObject{
         Random ran = new Random();
         int max = (int)(GameObject.screenWidth - (Ball.BALL_RADIUS * 4));
         int min = (int)(GameObject.screenWidth/2);
-        this.length = ran.nextInt((max - min) + 1) + min;//random int between max and min
+        this.length = ran.nextInt((max - min) + 1) + min; //random int between max and min (min and max inclusive)
         this.x = ran.nextInt((int)(GameObject.screenWidth - length));
     }
 }

@@ -5,4 +5,6 @@
     <string name="buttonStart">Start!</string>
     <string name="buttonHighscores">High Scores</string>
     <string name="buttonReset">Reset</string>
+    <string name="endgame_title">Game Over!</string>
+    <string name="endgame_submit">Submit</string>
 </resources>
