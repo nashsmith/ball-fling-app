@@ -102,6 +102,14 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void onclickButtonHighScores(View view){
+        //Create intent
+        Intent intent = new Intent(this, HighscoresActivity.class);
+        //got to highscore page
+        startActivity(intent);
+
+    }
+
+    public void onclickButtonHighScoresSave(View view){
         //save the score
         EditText et = findViewById(R.id.username);
         String name = et.getText().toString();

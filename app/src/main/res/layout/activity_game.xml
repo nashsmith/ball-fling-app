@@ -140,7 +140,7 @@
             android:background="@drawable/button_style"
             android:textColor="@color/white"
             android:text="@string/saveScore"
-            android:onClick="onclickButtonHighScores"/>
+            android:onClick="onclickButtonHighScoresSave"/>
 
     </LinearLayout>
 
