@@ -145,6 +145,7 @@ public class GameActivity extends AppCompatActivity {
 
             /*Obstacles*/
             objectList.add(new BounceBarrier(250, 900, 800, 60));
+            objectList.add(new DestroyBarrier(250, 1200, 300, 60));
             objectList.add(new Target(100, 400, 60));
             objectList.add(ball);
         }
