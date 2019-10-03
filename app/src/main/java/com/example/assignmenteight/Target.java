@@ -10,16 +10,16 @@ public class Target extends GameObject{
     private float radius;
     private boolean isAlreadyColliding = false;
     private boolean isMovingRight = true;
-    private static final int MOVEMENT_SPEED = 6;
+    private static final int MOVEMENT_SPEED = 2;
 
 
     /*Constructor*/
     public Target(float X, float Y, float r){
         super(X, Y); //call GameObject constructor
         radius = r; //set radius
-        brush.setColor(Color.GREEN);
+        brush.setColor(Color.parseColor("#FFC43D"));
         brush.setStyle(Paint.Style.STROKE);
-        brush.setStrokeWidth(7);
+        brush.setStrokeWidth(10);
     }
 
     /*Draw the target*/

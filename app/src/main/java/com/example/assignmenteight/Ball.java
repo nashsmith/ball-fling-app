@@ -2,10 +2,15 @@ package com.example.assignmenteight;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import static java.lang.Math.abs;
@@ -15,10 +20,9 @@ public class Ball extends GameObject{
     //Constants
     //Ball parameters
     public static final int BALL_RADIUS = 40;
-    public static final int BALL_MASS = 256;
-    public static final int BALL_TERMINAL_VELOCITY = 50;
-    public static final float BOUNCINESS = (float)0.6;
-    public static Random random = new Random();
+    public static final int BALL_MASS = 512;
+    public static final float BOUNCINESS = (float)0.8;
+    private static Random random = new Random();
     //Datafields
     //Ball speed
     public float dx = 0;
@@ -28,17 +32,16 @@ public class Ball extends GameObject{
     //Ball color
     public Paint color;
     //Gesture Detector
-    GestureDetector gestureDetector;
+    private GestureDetector gestureDetector;
+    private List<String>colorList;
 
 
 
     //Constructor
     public Ball(Context context, float startX, float startY, Paint p){
-        //x = startX;
-        //y = startY;
         super(startX, startY);
         color = p;
-
+        colorList = new ArrayList<>(Arrays.asList("#06D6A0","#EF476F","#F8FFE5", "#0FFF95"));
 
         //Create gesture detector
         gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
@@ -73,11 +76,6 @@ public class Ball extends GameObject{
         if(!isFlingable){
             dy += 0.2;
         }
-        //Set terminal velocity
-//        if(abs(dx) > BALL_TERMINAL_VELOCITY)
-//            dx = (dx/dx) * BALL_TERMINAL_VELOCITY;
-//        if(abs(dy) > BALL_TERMINAL_VELOCITY)
-//            dy = (dy/dy) * BALL_TERMINAL_VELOCITY;
         //If the ball will still be on the screen...
         if (x + dx > BALL_RADIUS && x + dx < screenWidth - BALL_RADIUS)
             x = x + dx; //Move the ball
@@ -95,13 +93,12 @@ public class Ball extends GameObject{
         return false;
     }
 
-    public void Reset(){
+    public void Reset() {
         x = screenWidth / 2;
         y = screenHeight - 100;
         dy = 0;
         dx = 0;
         isFlingable = true;
-        color.setARGB(255, random.nextInt(256), random.nextInt(256), random.nextInt(256));
-
+        color.setColor(Color.parseColor(colorList.get(random.nextInt(colorList.size()))));
     }
 }

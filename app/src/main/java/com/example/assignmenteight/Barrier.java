@@ -1,7 +1,6 @@
 package com.example.assignmenteight;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
@@ -12,12 +11,13 @@ public abstract class Barrier extends GameObject{
     private int length; //thickness of the barrier
     private Paint paint = new Paint();
     private int width;
-    protected boolean isMovingRight = true;
-    protected boolean isAlreadyColliding = false;
-    private static final int MOVEMENT_SPEED = 3;
+    private boolean isMovingRight = true;
+    private boolean isAlreadyColliding = false;
+    private int movementSpeed = 3;
+    private static Random ran = new Random();
 
     /*Constructor*/
-    public Barrier(float startX, float startY, int rectWidth, int rectLength, int color){
+    Barrier(float startX, float startY, int rectWidth, int rectLength, int color){
         super(startX, startY); //call GameObject constructor
         width = rectWidth; //set width
         length = rectLength;
@@ -28,17 +28,17 @@ public abstract class Barrier extends GameObject{
     @Override
     public void Draw(Canvas canvas){
         if(isMovingRight){
-            if((x + MOVEMENT_SPEED) + width > screenWidth){
+            if((x + movementSpeed) + width > screenWidth){
                 isMovingRight = false;
             }else{
-                x = x + MOVEMENT_SPEED;
+                x = x + movementSpeed;
             }
         }
         if(!isMovingRight){
-            if((x - MOVEMENT_SPEED) < 0){
+            if((x - movementSpeed) < 0){
                 isMovingRight = true;
             }else{
-                x = x - MOVEMENT_SPEED;
+                x = x - movementSpeed;
             }
         }
         int left = (int)x; //Distance from left side of screen to left wall
@@ -108,10 +108,11 @@ public abstract class Barrier extends GameObject{
 
     /*Changes position and size, multiple levels*/
     public void randomise(){
-        Random ran = new Random();
-        int max = (int)(GameObject.screenWidth - (Ball.BALL_RADIUS * 4));
-        int min = (int)(GameObject.screenWidth/2);
-        this.width = ran.nextInt((max - min) + 1) + min; //random int between max and min (min and max inclusive)
+        int max = (int)(GameObject.screenWidth/2);
+        //int min = (int)(GameObject.screenWidth/2);
+        this.width = ran.nextInt(max) + 200; //random int between max and min (min and max inclusive)
         this.x = ran.nextInt((int)(GameObject.screenWidth - width));
+        this.y = ran.nextInt(((int)GameObject.screenHeight - 700)) + 300;
+        movementSpeed = ran.nextInt(5) + 2;
     }
 }

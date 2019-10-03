@@ -43,6 +43,7 @@ public class GameActivity extends AppCompatActivity {
     int score = 0;
     //List of all the game objects
     List<GameObject> objectList = new ArrayList<>();
+    List<Barrier> barrierList = new ArrayList<>();
     Ball ball;
 
     @Override
@@ -91,6 +92,9 @@ public class GameActivity extends AppCompatActivity {
 
     public void onclickButtonReset(View view) {
         ball.Reset();
+        for (Barrier barrier : barrierList){
+            barrier.randomise();
+        }
     }
 
     public void onclickButtonAgain(View view){
@@ -171,25 +175,22 @@ public class GameActivity extends AppCompatActivity {
 
                 @Override
                 public void onFinish() {
-                    //Should exit the game and add the score to the highscore screen here
-                    textViewTimer.setText("Time Up!");
-                    //Save score somehow??
-
-
                     //make end screen visible
                     endScreen.setVisibility(View.VISIBLE);
                     isOver = true;
-
                 }
             }.start();
 
             //Add objects to the objectsList
 
             /*Obstacles*/
-            objectList.add(new BounceBarrier(250, 900, 600, 60));
-            objectList.add(new DestroyBarrier(250, 1200, 300, 60));
-            objectList.add(new Target(100, 400, 60));
+            barrierList.add(new BounceBarrier(0, 900, 400, 40));
+            barrierList.add(new BounceBarrier(width/2, 500, 400, 40));
+            barrierList.add(new DestroyBarrier(width, 1000, 200, 40));
+            objectList.addAll(barrierList);
+            objectList.add(new Target(100, 200, 80));
             objectList.add(ball);
+
         }
 
         @Override
@@ -203,10 +204,8 @@ public class GameActivity extends AppCompatActivity {
                             score++;
                             textViewScore.setText(String.format("Score: %s", String.valueOf(score)));
                             ball.Reset();
-                            for (GameObject b : objectList){
-                                if (b.getClass().equals(Barrier.class)){
-                                    ((Barrier)b).randomise();
-                                }
+                            for (Barrier barrier : barrierList){
+                                    barrier.randomise();
                             }
 
                         }
