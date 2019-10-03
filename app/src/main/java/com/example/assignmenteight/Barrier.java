@@ -7,18 +7,19 @@ import android.graphics.Rect;
 
 import java.util.Random;
 
-public class Barrier extends GameObject{
+public abstract class Barrier extends GameObject{
 
-    private static final int THICKNESS = 60; //thickness of the barrier
+    private int length; //thickness of the barrier
     private Paint paint = new Paint();
-    private int length;
-    private boolean isAlreadyColliding = false;
+    private int width;
+    protected boolean isAlreadyColliding = false;
 
     /*Constructor*/
-    public Barrier(float startX, float startY, int rectLength){
+    public Barrier(float startX, float startY, int rectWidth, int rectLength, int color){
         super(startX, startY); //call GameObject constructor
-        length = rectLength; //set length
-        paint.setColor(Color.WHITE);
+        width = rectWidth; //set width
+        length = rectLength;
+        paint.setColor(color);
     }
 
     /*Draw the barrier*/
@@ -26,8 +27,8 @@ public class Barrier extends GameObject{
     public void Draw(Canvas canvas){
         int left = (int)x; //Distance from left side of screen to left wall
         int top = (int)y; //Distance from top of screen to top wall
-        int right = left + length; //Distance from left side of screen to right wall
-        int bottom = top + THICKNESS; //Distance from top of screen to bottom wall
+        int right = left + width; //Distance from left side of screen to right wall
+        int bottom = top + length; //Distance from top of screen to bottom wall
 
         Rect rec = new Rect(left, top, right, bottom);
         canvas.drawRect(rec, paint); //Draw the barrier
@@ -37,7 +38,7 @@ public class Barrier extends GameObject{
     public boolean collidesWith(Ball ball){
         float testX = ball.x;
         float testY = ball.y;
-        boolean isSideCollison = false;
+        boolean isSideCollision = false;
         boolean isVertCollision = false;
         boolean isTop = false;
 
@@ -46,12 +47,12 @@ public class Barrier extends GameObject{
         //left wall
         if(ball.x < this.x) {
             testX = this.x;
-            isSideCollison = true;
+            isSideCollision = true;
         }
         //right wall
-        else if(ball.x > this.x + this.length) {
-            testX = this.x + this.length;
-            isSideCollison = true;
+        else if(ball.x > this.x + this.width) {
+            testX = this.x + this.width;
+            isSideCollision = true;
         }
         //top wall
         if(ball.y < this.y) {
@@ -60,8 +61,8 @@ public class Barrier extends GameObject{
             isTop = true;
         }
         //bottom wall
-        else if(ball.y > this.y + Barrier.THICKNESS){
-            testY = this.y + Barrier.THICKNESS;
+        else if(ball.y > this.y + length){
+            testY = this.y + length;
             isVertCollision = true;
         }
 
@@ -77,21 +78,7 @@ public class Barrier extends GameObject{
             }
             if(!isAlreadyColliding){
                 isAlreadyColliding = true;
-                if(isSideCollison && isVertCollision){
-                    if(Math.abs(ball.dx)> Math.abs(ball.dy))
-                        ball.dy = -ball.dy*Ball.BOUNCINESS;
-                    else
-                        ball.dx = -ball.dx*Ball.BOUNCINESS;
-
-
-                }
-                else if(isSideCollison){
-                    ball.dx = -ball.dx*Ball.BOUNCINESS;
-
-                }
-                else if(isVertCollision){
-                    ball.dy = -ball.dy*Ball.BOUNCINESS;
-                }
+                collisionAction(ball, isSideCollision, isVertCollision, isTop);
                 return true;
             }else{
                 return false;
@@ -101,12 +88,14 @@ public class Barrier extends GameObject{
         return false;
     }
 
+    public abstract void collisionAction(Ball ball, boolean isSideCollision, boolean isVertCollision, boolean isTop);
+
     /*Changes position and size, multiple levels*/
     public void randomise(){
         Random ran = new Random();
         int max = (int)(GameObject.screenWidth - (Ball.BALL_RADIUS * 4));
         int min = (int)(GameObject.screenWidth/2);
-        this.length = ran.nextInt((max - min) + 1) + min; //random int between max and min (min and max inclusive)
-        this.x = ran.nextInt((int)(GameObject.screenWidth - length));
+        this.width = ran.nextInt((max - min) + 1) + min; //random int between max and min (min and max inclusive)
+        this.x = ran.nextInt((int)(GameObject.screenWidth - width));
     }
 }

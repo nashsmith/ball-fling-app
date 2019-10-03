@@ -11,14 +11,12 @@ import android.os.CountDownTimer;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,7 +144,7 @@ public class GameActivity extends AppCompatActivity {
             //Add objects to the objectsList
 
             /*Obstacles*/
-            objectList.add(new Barrier(250, 900, 800));
+            objectList.add(new BounceBarrier(250, 900, 800, 60));
             objectList.add(new Target(100, 400, 60));
             objectList.add(ball);
         }
