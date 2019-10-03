@@ -34,6 +34,7 @@ public class GameActivity extends AppCompatActivity {
     //List of all the game objects
     List<GameObject> objectList = new ArrayList<>();
     Ball ball;
+    Barrier barrier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +114,9 @@ public class GameActivity extends AppCompatActivity {
             //Add objects to the objectsList
 
             /*Obstacles*/
+
             objectList.add(new Barrier(250, 900, 800));
+            barrier = (Barrier)objectList.get(0); //global barrier reference
             objectList.add(new Target(100, 400, 60));
             objectList.add(ball);
         }
@@ -128,6 +131,8 @@ public class GameActivity extends AppCompatActivity {
                         score++;
                         textViewScore.setText(String.format("Score: %s", String.valueOf(score)));
                         ball.Reset();
+                        //randomise the barrier (kind of like new level)
+                        barrier.randomise();
                     }
 
                 }

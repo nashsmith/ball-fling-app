@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+import java.util.Random;
+
 public class Barrier extends GameObject{
 
     private static final int THICKNESS = 60; //thickness of the barrier
@@ -97,5 +99,14 @@ public class Barrier extends GameObject{
         }
         isAlreadyColliding = false;
         return false;
+    }
+
+    /*Changes position and size, multiple levels*/
+    public void randomise(){
+        Random ran = new Random();
+        int max = (int)(GameObject.screenWidth - (Ball.BALL_RADIUS * 4));
+        int min = (int)(GameObject.screenWidth/2);
+        this.length = ran.nextInt((max - min) + 1) + min;//random int between max and min
+        this.x = ran.nextInt((int)(GameObject.screenWidth - length));
     }
 }
