@@ -12,7 +12,9 @@ public abstract class Barrier extends GameObject{
     private int length; //thickness of the barrier
     private Paint paint = new Paint();
     private int width;
+    protected boolean isMovingRight = true;
     protected boolean isAlreadyColliding = false;
+    private static final int MOVEMENT_SPEED = 3;
 
     /*Constructor*/
     public Barrier(float startX, float startY, int rectWidth, int rectLength, int color){
@@ -25,6 +27,20 @@ public abstract class Barrier extends GameObject{
     /*Draw the barrier*/
     @Override
     public void Draw(Canvas canvas){
+        if(isMovingRight){
+            if((x + MOVEMENT_SPEED) + width > screenWidth){
+                isMovingRight = false;
+            }else{
+                x = x + MOVEMENT_SPEED;
+            }
+        }
+        if(!isMovingRight){
+            if((x - MOVEMENT_SPEED) < 0){
+                isMovingRight = true;
+            }else{
+                x = x - MOVEMENT_SPEED;
+            }
+        }
         int left = (int)x; //Distance from left side of screen to left wall
         int top = (int)y; //Distance from top of screen to top wall
         int right = left + width; //Distance from left side of screen to right wall

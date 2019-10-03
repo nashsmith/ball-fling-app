@@ -120,7 +120,7 @@ public class GameActivity extends AppCompatActivity {
             paint.setColor(getColor(R.color.colorPrimary));
             ball = new Ball(context, width / 2, height - 100, paint);
             //Create a countdown timer
-            CountDownTimer timer = new CountDownTimer(10000, 1000) {
+            CountDownTimer timer = new CountDownTimer(30000, 1000) {
                 @Override
                 public void onTick(long l) {
                     textViewTimer.setText(String.format("Time: %d", l / 1000));
@@ -144,7 +144,7 @@ public class GameActivity extends AppCompatActivity {
             //Add objects to the objectsList
 
             /*Obstacles*/
-            objectList.add(new BounceBarrier(250, 900, 800, 60));
+            objectList.add(new BounceBarrier(250, 900, 600, 60));
             objectList.add(new DestroyBarrier(250, 1200, 300, 60));
             objectList.add(new Target(100, 400, 60));
             objectList.add(ball);
