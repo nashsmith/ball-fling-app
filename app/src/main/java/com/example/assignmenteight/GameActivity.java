@@ -40,6 +40,8 @@ public class GameActivity extends AppCompatActivity {
     LinearLayout endScreen;
     //GraphicsView
     GraphicsView graphicsView;
+    //Final score display
+    TextView textViewFinalScore;
     int score = 0;
     //List of all the game objects
     List<GameObject> objectList = new ArrayList<>();
@@ -80,8 +82,10 @@ public class GameActivity extends AppCompatActivity {
         //Set textview score to 0 at the start
         textViewScore = findViewById(R.id.score);
         textViewScore.setText(String.format("Score: %s", String.valueOf(score)));
-        //Set textview time
+        //get textview time
         textViewTimer = findViewById(R.id.timer);
+        //get textview final score
+        textViewFinalScore = findViewById(R.id.showFinalScore);
         //Set endscreen to be gone at the start
         endScreen = findViewById(R.id.endScreen);
         endScreen.setVisibility(View.GONE);
@@ -166,7 +170,7 @@ public class GameActivity extends AppCompatActivity {
             paint.setColor(getColor(R.color.colorPrimary));
             ball = new Ball(context, width / 2, height - 100, paint);
             //Create a countdown timer
-            CountDownTimer timer = new CountDownTimer(30000, 1000) {
+            CountDownTimer timer = new CountDownTimer(1000, 1000) {
                 @Override
                 public void onTick(long l) {
                     textViewTimer.setText(String.format("Time: %d", l / 1000));
@@ -178,6 +182,7 @@ public class GameActivity extends AppCompatActivity {
                     //make end screen visible
                     endScreen.setVisibility(View.VISIBLE);
                     isOver = true;
+                    textViewFinalScore.setText(String.format("Score: %d", score));
                 }
             }.start();
 
