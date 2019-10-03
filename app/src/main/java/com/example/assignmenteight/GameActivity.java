@@ -2,6 +2,7 @@ package com.example.assignmenteight;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -23,6 +24,7 @@ import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 
 public class GameActivity extends AppCompatActivity {
@@ -107,6 +109,43 @@ public class GameActivity extends AppCompatActivity {
         Intent intent = new Intent(this, HighscoresActivity.class);
         startActivity(intent);
 
+    }
+
+    public void onclickButtonHighScoresSave(View view){
+        //save the score
+        EditText et = findViewById(R.id.username);
+        String name = et.getText().toString();
+        saveScore(name, score);
+
+        //Create intent
+        Intent intent = new Intent(this, HighscoresActivity.class);
+        //got to highscore page
+        startActivity(intent);
+
+    }
+
+    /*Save score and username to sharedpreferences*/
+    public void saveScore(String name, int score){
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("scores", MODE_PRIVATE);
+        SharedPreferences.Editor edit = preferences.edit();
+
+        if(preferences.getInt("first", -1) < score){
+            edit.putInt("first", score);
+            edit.putString("firstName", name);
+            edit.apply();
+        }else if(preferences.getInt("second", -1) < score){
+            edit.putInt("second", score);
+            edit.putString("secondName", name);
+            edit.apply();
+        }else if(preferences.getInt("third", -1) < score){
+            edit.putInt("third", score);
+            edit.putString("thirdName", name);
+            edit.apply();
+        }else if(preferences.getInt("fourth", -1) < score){
+            edit.putInt("fourth", score);
+            edit.putString("fourthName", name);
+            edit.apply();
+        }
     }
 
     //Custom View for drawing the ball
