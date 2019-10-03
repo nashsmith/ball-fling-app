@@ -10,7 +10,7 @@ public class Target extends GameObject{
     private float radius;
     private boolean isAlreadyColliding = false;
     private boolean isMovingRight = true;
-    private static final int MOVEMENT_SPEED = 5;
+    private static final int MOVEMENT_SPEED = 6;
 
 
     /*Constructor*/
@@ -26,7 +26,7 @@ public class Target extends GameObject{
     @Override
     public void Draw(Canvas canvas){
         if(isMovingRight){
-            if((x + 1) + radius > screenWidth){
+            if((x + MOVEMENT_SPEED) + radius > screenWidth){
             isMovingRight = false;
         }else{
             x = x + MOVEMENT_SPEED;
