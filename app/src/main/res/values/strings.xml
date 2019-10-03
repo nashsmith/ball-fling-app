@@ -7,4 +7,6 @@
     <string name="time_up">Time up!</string>
     <string name="buttonPlayAgain">Play Again</string>
     <string name="buttonBacktomenu">Main menu</string>
+    <string name="saveScore">Save Score!</string>
+    <string name="enterName">Enter your name</string>
 </resources>

@@ -120,6 +120,27 @@
             android:text="@string/buttonHighscores"
             android:onClick="onclickButtonHighScores"/>
 
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:background="@color/white"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_margin="20dp"
+            android:hint="@string/enterName"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="20dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:background="@drawable/button_style"
+            android:textColor="@color/white"
+            android:text="@string/saveScore"
+            android:onClick="onclickButtonHighScores"/>
 
     </LinearLayout>
 

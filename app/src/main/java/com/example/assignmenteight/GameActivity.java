@@ -2,6 +2,7 @@ package com.example.assignmenteight;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -11,6 +12,7 @@ import android.os.CountDownTimer;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -82,8 +84,6 @@ public class GameActivity extends AppCompatActivity {
         endScreen = findViewById(R.id.endScreen);
         endScreen.setVisibility(View.GONE);
 
-
-
     }
 
     public void onclickButtonReset(View view) {
@@ -102,10 +102,36 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void onclickButtonHighScores(View view){
+        //save the score
+        EditText et = findViewById(R.id.username);
+        String name = et.getText().toString();
+        saveScore(name, score);
+
         //Create intent
         Intent intent = new Intent(this, HighscoresActivity.class);
+        //got to highscore page
         startActivity(intent);
 
+    }
+
+    /*Save score and username to sharedpreferences*/
+    public void saveScore(String name, int score){
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("scores", MODE_PRIVATE);
+        SharedPreferences.Editor edit = preferences.edit();
+
+        if(preferences.getInt("first", -1) < score){
+            edit.putInt("first", score);
+            edit.putString("firstName", name);
+            edit.apply();
+        }else if(preferences.getInt("second", -1) < score){
+            edit.putInt("second", score);
+            edit.putString("secondName", name);
+            edit.apply();
+        }else if(preferences.getInt("third", -1) < score){
+            edit.putInt("third", score);
+            edit.putString("thirdName", name);
+            edit.apply();
+        }
     }
 
     //Custom View for drawing the ball
@@ -135,11 +161,9 @@ public class GameActivity extends AppCompatActivity {
                     textViewTimer.setText("Time Up!");
                     //Save score somehow??
 
-
                     //make end screen visible
                     endScreen.setVisibility(View.VISIBLE);
                     isOver = true;
-
                 }
             }.start();
 
@@ -185,6 +209,8 @@ public class GameActivity extends AppCompatActivity {
                 return true;
             return super.onTouchEvent(event);
         }
+
+
 
     }
 }
