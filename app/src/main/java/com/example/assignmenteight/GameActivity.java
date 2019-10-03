@@ -153,6 +153,10 @@ public class GameActivity extends AppCompatActivity {
             edit.putInt("fourth", score);
             edit.putString("fourthName", name);
             edit.apply();
+        }else if(preferences.getInt("fifth", -1) < score){
+            edit.putInt("fifth", score);
+            edit.putString("fifthName", name);
+            edit.apply();
         }
     }
 
@@ -170,7 +174,7 @@ public class GameActivity extends AppCompatActivity {
             paint.setColor(getColor(R.color.colorPrimary));
             ball = new Ball(context, width / 2, height - 100, paint);
             //Create a countdown timer
-            CountDownTimer timer = new CountDownTimer(1000, 1000) {
+            CountDownTimer timer = new CountDownTimer(20000, 1000) {
                 @Override
                 public void onTick(long l) {
                     textViewTimer.setText(String.format("Time: %d", l / 1000));

@@ -33,7 +33,7 @@ public class HighscoresActivity extends AppCompatActivity {
 
         //Get list of strings
         SharedPreferences p = getApplicationContext().getSharedPreferences("scores", MODE_PRIVATE);
-        String first, firstName, second, secondName, third, thirdName, fourth, fourthName;
+        String first, firstName, second, secondName, third, thirdName, fourth, fourthName, fifth, fifthName;
         first = Integer.toString(p.getInt("first", 0));
         firstName = p.getString("firstName", "Unknown");
         second = Integer.toString(p.getInt("second", 0));
@@ -42,11 +42,14 @@ public class HighscoresActivity extends AppCompatActivity {
         thirdName = p.getString("thirdName", "Unknown");
         fourth = Integer.toString(p.getInt("fourth", 0));
         fourthName = p.getString("fourthName", "Unknown");
+        fifth = Integer.toString(p.getInt("fifth", 0));
+        fifthName = p.getString("fifthName", "Unknown");
 
-        String[] strings = {(firstName + ": " + first),
-                (secondName + ": " + second),
-                (thirdName + ": " + third),
-                (fourthName + ": " + fourth)};
+        String[] strings = {(firstName + ": \t" + first),
+                (secondName + ": \t" + second),
+                (thirdName + ": \t" + third),
+                (fourthName + ": \t" + fourth),
+                (fifthName + ": \t" + fifth)};
         //Create adapter
         final ArrayAdapter<String> adapter = new HighscoreAdapter(this, android.R.layout.simple_list_item_1, strings);
         //Bind to listview
