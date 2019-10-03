@@ -4,7 +4,7 @@
     <string name="developers">Developed by Justin and Nash</string>
     <string name="buttonStart">Start!</string>
     <string name="buttonHighscores">High Scores</string>
-    <string name="buttonReset">Reset</string>
-    <string name="endgame_title">Game Over!</string>
-    <string name="endgame_submit">Submit</string>
+    <string name="time_up">Time up!</string>
+    <string name="buttonPlayAgain">Play Again</string>
+    <string name="buttonBacktomenu">Main menu</string>
 </resources>

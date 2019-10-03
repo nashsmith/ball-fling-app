@@ -1,6 +1,7 @@
 package com.example.assignmenteight;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -10,6 +11,8 @@ import android.os.CountDownTimer;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -30,11 +33,14 @@ public class GameActivity extends AppCompatActivity {
     TextView textViewScore;
     //Timer
     TextView textViewTimer;
+    //End screen
+    LinearLayout endScreen;
+    //GraphicsView
+    GraphicsView graphicsView;
     int score = 0;
     //List of all the game objects
     List<GameObject> objectList = new ArrayList<>();
     Ball ball;
-    Barrier barrier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +69,7 @@ public class GameActivity extends AppCompatActivity {
         //Get view
         ConstraintLayout constraintLayout = findViewById(R.id.constraintLayoutRoot);
         //Create GraphicsView object
-        GraphicsView graphicsView = new GraphicsView(this);
+        graphicsView = new GraphicsView(this);
         //Add graphics view to layout
         constraintLayout.addView(graphicsView);
 
@@ -72,6 +78,9 @@ public class GameActivity extends AppCompatActivity {
         textViewScore.setText(String.format("Score: %s", String.valueOf(score)));
         //Set textview time
         textViewTimer = findViewById(R.id.timer);
+        //Set endscreen to be gone at the start
+        endScreen = findViewById(R.id.endScreen);
+        endScreen.setVisibility(View.GONE);
 
 
 
@@ -81,21 +90,39 @@ public class GameActivity extends AppCompatActivity {
         ball.Reset();
     }
 
+    public void onclickButtonAgain(View view){
+        recreate();
+    }
+
+    public void onclickButtonMenu(View view){
+        //Create intent
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+
+    }
+
+    public void onclickButtonHighScores(View view){
+        //Create intent
+        Intent intent = new Intent(this, HighscoresActivity.class);
+        startActivity(intent);
+
+    }
 
     //Custom View for drawing the ball
     public class GraphicsView extends View {
         //Declare variables
         Paint paint = new Paint();
+        boolean isOver = false;
 
 
         //Constructor
-        public GraphicsView(Context context) {
+        public GraphicsView(final Context context) {
             super(context);
             //Create objects
             paint.setColor(getColor(R.color.colorPrimary));
             ball = new Ball(context, width / 2, height - 100, paint);
             //Create a countdown timer
-            CountDownTimer timer = new CountDownTimer(30000, 1000) {
+            CountDownTimer timer = new CountDownTimer(2000, 1000) {
                 @Override
                 public void onTick(long l) {
                     textViewTimer.setText(String.format("Time: %d", l / 1000));
@@ -105,8 +132,13 @@ public class GameActivity extends AppCompatActivity {
                 @Override
                 public void onFinish() {
                     //Should exit the game and add the score to the highscore screen here
-                    textViewTimer.setText("Self destruct!");
+                    textViewTimer.setText("Time Up!");
+                    //Save score somehow??
 
+
+                    //make end screen visible
+                    endScreen.setVisibility(View.VISIBLE);
+                    isOver = true;
 
                 }
             }.start();
@@ -114,9 +146,7 @@ public class GameActivity extends AppCompatActivity {
             //Add objects to the objectsList
 
             /*Obstacles*/
-
             objectList.add(new Barrier(250, 900, 800));
-            barrier = (Barrier)objectList.get(0); //global barrier reference
             objectList.add(new Target(100, 400, 60));
             objectList.add(ball);
         }
@@ -124,27 +154,28 @@ public class GameActivity extends AppCompatActivity {
         @Override
         protected void onDraw(Canvas canvas) {
 
-            for (GameObject object : objectList) {
-                object.Draw(canvas);
-                if(object.collidesWith(ball)){
-                    if (object.getClass().equals(Target.class)){
-                        score++;
-                        textViewScore.setText(String.format("Score: %s", String.valueOf(score)));
-                        ball.Reset();
-                        //randomise the barrier (kind of like new level)
-                        barrier.randomise();
-                    }
+            if(!isOver){
+                for (GameObject object : objectList) {
+                    object.Draw(canvas);
+                    if(object.collidesWith(ball)){
+                        if (object.getClass().equals(Target.class)){
+                            score++;
+                            textViewScore.setText(String.format("Score: %s", String.valueOf(score)));
+                            ball.Reset();
+                        }
 
+                    }
                 }
+
+                //Redraw in the next position
+                invalidate();
             }
 
-            //Redraw in the next position
-            invalidate();
         }
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {
-            if (ball.Move(event))
+            if (ball.Move(event) && !isOver)
                 return true;
             return super.onTouchEvent(event);
         }
