@@ -151,18 +151,28 @@ public class GameActivity extends AppCompatActivity {
 
         if(preferences.getInt("first", -1) < score){
             edit.putInt("first", score);
+            edit.putString("fifthName", preferences.getString("fourthName", ""));
+            edit.putString("fourthName", preferences.getString("thirdName", ""));
+            edit.putString("thirdName", preferences.getString("secondName", ""));
+            edit.putString("secondName", preferences.getString("firstName", ""));
             edit.putString("firstName", name);
             edit.apply();
         }else if(preferences.getInt("second", -1) < score){
             edit.putInt("second", score);
+            edit.putString("fifthName", preferences.getString("fourthName", ""));
+            edit.putString("fourthName", preferences.getString("thirdName", ""));
+            edit.putString("thirdName", preferences.getString("secondName", ""));
             edit.putString("secondName", name);
             edit.apply();
         }else if(preferences.getInt("third", -1) < score){
             edit.putInt("third", score);
+            edit.putString("fifthName", preferences.getString("fourthName", ""));
+            edit.putString("fourthName", preferences.getString("thirdName", ""));
             edit.putString("thirdName", name);
             edit.apply();
         }else if(preferences.getInt("fourth", -1) < score){
             edit.putInt("fourth", score);
+            edit.putString("fifthName", preferences.getString("fourthName", ""));
             edit.putString("fourthName", name);
             edit.apply();
         }else if(preferences.getInt("fifth", -1) < score){
