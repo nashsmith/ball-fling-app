@@ -49,10 +49,6 @@ public class HighscoresActivity extends AppCompatActivity {
 
         String[] strings = new String[5];
 
-        if(firstName.equals("Unknown")){
-            strings[0] = "";
-        }
-
         //if the score isnt set, the string will be empty, otherwise it will contain name and score
         strings[0] = firstName.equals("Unknown") ? "" : (firstName + ": \t" + first);
         strings[1] = secondName.equals("Unknown") ? "" : (secondName + ": \t" + second);
