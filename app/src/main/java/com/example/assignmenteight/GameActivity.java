@@ -197,6 +197,7 @@ public class GameActivity extends AppCompatActivity {
                 public void onFinish() {
                     //make end screen visible
                     endScreen.setVisibility(View.VISIBLE);
+                    resetButton.setVisibility(View.GONE);
                     isOver = true;
                     textViewFinalScore.setText(String.format("Score: %d", score));
                 }
