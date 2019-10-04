@@ -13,7 +13,7 @@
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@color/black" />
+        android:src="@color/dark_blue" />
 
     <TextView
         android:id="@+id/padding"
@@ -129,7 +129,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:textColor="@color/black"
+            android:textColor="@color/dark_blue"
             android:background="@color/white"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:layout_margin="20dp"
