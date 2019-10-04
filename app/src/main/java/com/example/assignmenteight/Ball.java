@@ -20,7 +20,7 @@ public class Ball extends GameObject{
     //Constants
     //Ball parameters
     public static final int BALL_RADIUS = 40;
-    public static final int BALL_MASS = 512;
+    public static final int BALL_MASS = 256;
     public static final float BOUNCINESS = (float)0.8;
     private static Random random = new Random();
     //Datafields

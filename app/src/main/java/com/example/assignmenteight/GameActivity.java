@@ -12,6 +12,7 @@ import android.os.CountDownTimer;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,7 +43,10 @@ public class GameActivity extends AppCompatActivity {
     GraphicsView graphicsView;
     //Final score display
     TextView textViewFinalScore;
+    //reset button
+    Button resetButton;
     int score = 0;
+
     //List of all the game objects
     List<GameObject> objectList = new ArrayList<>();
     List<Barrier> barrierList = new ArrayList<>();
@@ -60,13 +64,17 @@ public class GameActivity extends AppCompatActivity {
         actionBar.hide();
         int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+
         getWindow().getDecorView().setSystemUiVisibility(uiOptions);
 
         //Get screen size
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
-        display.getSize(size);
+        display.getRealSize(size);
         width = size.x;
         height = size.y;
         GameObject.screenWidth = width;
@@ -88,6 +96,9 @@ public class GameActivity extends AppCompatActivity {
         textViewFinalScore = findViewById(R.id.showFinalScore);
         //Set endscreen to be gone at the start
         endScreen = findViewById(R.id.endScreen);
+        //Get button
+        resetButton = findViewById(R.id.resetButton);
+        resetButton.setVisibility(View.GONE);
         endScreen.setVisibility(View.GONE);
 
 
@@ -96,6 +107,7 @@ public class GameActivity extends AppCompatActivity {
 
     public void onclickButtonReset(View view) {
         ball.Reset();
+        resetButton.setVisibility(View.GONE);
         for (Barrier barrier : barrierList){
             barrier.randomise();
         }
@@ -172,7 +184,7 @@ public class GameActivity extends AppCompatActivity {
             super(context);
             //Create objects
             paint.setColor(getColor(R.color.colorPrimary));
-            ball = new Ball(context, width / 2, height - 100, paint);
+            ball = new Ball(context, width / 2, height - 150, paint);
             //Create a countdown timer
             CountDownTimer timer = new CountDownTimer(20000, 1000) {
                 @Override
@@ -213,25 +225,28 @@ public class GameActivity extends AppCompatActivity {
                             score++;
                             textViewScore.setText(String.format("Score: %s", String.valueOf(score)));
                             ball.Reset();
+                            resetButton.setVisibility(View.GONE);
                             for (Barrier barrier : barrierList){
                                     barrier.randomise();
                             }
-
+                        }else if(object.getClass().equals(DestroyBarrier.class)){
+                            resetButton.setVisibility(View.GONE);
                         }
-
                     }
                 }
-
                 //Redraw in the next position
                 invalidate();
             }
-
         }
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {
-            if (ball.Move(event) && !isOver)
+            if (ball.Move(event) && !isOver){
+                if(!ball.isFlingable)
+                    resetButton.setVisibility(View.VISIBLE);
                 return true;
+            }
+
             return super.onTouchEvent(event);
         }
 
