@@ -34,6 +34,8 @@ public class HighscoresActivity extends AppCompatActivity {
         //Get list of strings
         SharedPreferences p = getApplicationContext().getSharedPreferences("scores", MODE_PRIVATE);
         String first, firstName, second, secondName, third, thirdName, fourth, fourthName, fifth, fifthName;
+
+        //Get the highscore names and scores
         first = Integer.toString(p.getInt("first", 0));
         firstName = p.getString("firstName", "Unknown");
         second = Integer.toString(p.getInt("second", 0));
@@ -45,11 +47,24 @@ public class HighscoresActivity extends AppCompatActivity {
         fifth = Integer.toString(p.getInt("fifth", 0));
         fifthName = p.getString("fifthName", "Unknown");
 
-        String[] strings = {(firstName + ": \t" + first),
-                (secondName + ": \t" + second),
-                (thirdName + ": \t" + third),
-                (fourthName + ": \t" + fourth),
-                (fifthName + ": \t" + fifth)};
+        String[] strings = new String[5];
+
+        if(firstName.equals("Unknown")){
+            strings[0] = "";
+        }
+
+        //if the score isnt set, the string will be empty, otherwise it will contain name and score
+        strings[0] = firstName.equals("Unknown") ? "" : (firstName + ": \t" + first);
+        strings[1] = secondName.equals("Unknown") ? "" : (secondName + ": \t" + second);
+        strings[2] = thirdName.equals("Unknown") ? "" : (thirdName + ": \t" + third);
+        strings[3] = fourthName.equals("Unknown") ? "" : (fourthName + ": \t" + fourth);
+        strings[4] = fifthName.equals("Unknown") ? "" : (fifthName + ": \t" + fifth);
+//
+//        strings = {(firstName + ": \t" + first),
+//                (secondName + ": \t" + second),
+//                (thirdName + ": \t" + third),
+//                (fourthName + ": \t" + fourth),
+//                (fifthName + ": \t" + fifth)};
         //Create adapter
         final ArrayAdapter<String> adapter = new HighscoreAdapter(this, android.R.layout.simple_list_item_1, strings);
         //Bind to listview
