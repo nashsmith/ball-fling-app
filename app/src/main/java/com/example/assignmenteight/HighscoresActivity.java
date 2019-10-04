@@ -26,10 +26,6 @@ public class HighscoresActivity extends AppCompatActivity {
         //Make fullscreen
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-//        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                | View.SYSTEM_UI_FLAG_FULLSCREEN
-//                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-//        getWindow().getDecorView().setSystemUiVisibility(uiOptions);
 
         //Get list of strings
         SharedPreferences p = getApplicationContext().getSharedPreferences("scores", MODE_PRIVATE);
@@ -55,24 +51,12 @@ public class HighscoresActivity extends AppCompatActivity {
         strings[2] = thirdName.equals("Unknown") ? "" : (thirdName + ": \t" + third);
         strings[3] = fourthName.equals("Unknown") ? "" : (fourthName + ": \t" + fourth);
         strings[4] = fifthName.equals("Unknown") ? "" : (fifthName + ": \t" + fifth);
-//
-//        strings = {(firstName + ": \t" + first),
-//                (secondName + ": \t" + second),
-//                (thirdName + ": \t" + third),
-//                (fourthName + ": \t" + fourth),
-//                (fifthName + ": \t" + fifth)};
+
         //Create adapter
         final ArrayAdapter<String> adapter = new HighscoreAdapter(this, android.R.layout.simple_list_item_1, strings);
         //Bind to listview
         ListView listView = findViewById(R.id.highscoresList);
         listView.setAdapter(adapter);
-
-        //Intent intent = getIntent();
-        //String name = intent.getStringExtra("name");
-        //int score = intent.getIntExtra("score", -1);
-        //saveScore(name, score);
-        //SharedPreferences p = getApplicationContext().getSharedPreferences("scores", MODE_PRIVATE);
-        Log.i("SCORE", p.getString("firstName", ""));
     }
 
     public void onclickButtonMenu(View view){
